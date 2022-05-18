@@ -2,7 +2,7 @@
 
 * Install the virtual environment Package
     
-    '''pip install virtualenv'''
+    ```pip install virtualenv```
 
 * Create the virtual environment 
     
