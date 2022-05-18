@@ -6,13 +6,27 @@
 
 * Create the virtual environment 
     
-    ```virtualenv project_django```
+    ```virtualenv ~project name~```
 
 * Activate the virtual environment
     
-    ```source project_django/bin/activate```  [Mac OS/ Linux] \
-    ```project_django\Scripts\activate``` [Windows]
+    ```source ~project name~/bin/activate```  [Mac OS/ Linux] \
+    ```~project name~\Scripts\activate``` [Windows]
     
 * Deactivate the virtual environment
     
     ```deactivate```
+
+# 2. Getting Started with Django
+
+* Install Django 
+```pip install django```
+
+* Start a Project
+```django-admin startproject ~project name~```
+
+* Run server 
+```python manage.py runserver```
+
+* Start App
+```python manage.py startapp ~appname~```
