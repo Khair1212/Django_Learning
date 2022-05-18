@@ -10,7 +10,7 @@
 
 * Activate the virtual environment
     
-    ```source project_django/bin/activate  [Mac OS/ Linux]```
+    ```source project_django/bin/activate  [Mac OS/ Linux]``` \
     ```project_django\Scripts\activate [Windows]```
     
 * Deactivate the virtual environment
