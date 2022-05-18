@@ -5,8 +5,29 @@
 * Start an app
 ```python manage.py startapp firstapp```
 * Go to app views to add a new page
-```from django.http import HttpResponse
+```
+   from django.http import HttpResponse
    def home(request):
-	   return HttpResponse("<h1>My Home </h1>")``` 
+	  return HttpResponse("<h1>My Home </h1>")
+``` 
      
-* Make 
+* Make app url file and add url there
+
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+	path('', views.home, name = "blog.home",
+]
+```
+* Add app url to main urls file
+```
+*urls.py [main]
+from django.urls import path, include
+
+urlpatterns = [
+	path('admin/', admin.site.urls,
+	path("blog/", include('blog.urls'))
+]
+```
