@@ -1,11 +1,9 @@
 # 1. Set up Virtual Environments
 
 * Install the virtual environment Package
-    
-    ```pip install virtualenv```
+  ```pip install virtualenv```
 
 * Create the virtual environment 
-    
     ```virtualenv ~project name~```
 
 * Activate the virtual environment
@@ -14,7 +12,6 @@
     ```~project name~\Scripts\activate``` [Windows]
     
 * Deactivate the virtual environment
-    
     ```deactivate```
 
 # 2. Getting Started with Django
