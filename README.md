@@ -2,17 +2,17 @@
 
 * Install the virtual environment Package
     
-    pip install virtualenv
+    `pip install virtualenv
 
 * Create the virtual environment 
     
-    virtualenv project_django
+    `virtualenv project_django
 
 * Activate the virtual environment
     
-    source project_django/bin/activate  [Mac OS/ Linux]
+    `source project_django/bin/activate  [Mac OS/ Linux]
     project_django\Scripts\activate [Windows]
-
+    
 * Deactivate the virtual environment
     
-    deactivate
+    `deactivate
