@@ -64,3 +64,107 @@
 	path("blog/", include('blog.urls'))
   ]
 ```
+
+
+# Lecture 3: Templates
+
+
+We can't just add bunch of code in the views function. So, we just need to create a temlate and refer that to views. \
+First create a templates directory in the app folder. Inside the template folder create a folder with the app name like "blog" in our case. Now inside that folder write down the html files. Now add the app configuration in the settings.py Installed App list . \
+
+```
+INSTALLED_APPS = [
+	'blog.apps.BlogConfig' [BlogConfig from the apps.py]
+	'',
+	'',
+]
+```
+* Use the render package 
+
+```
+def home(request):
+    return render(request, 'blog/home.html')
+```
+
+* Render Data from views 
+
+1) Add som data first like a list of dictionary
+
+```posts = [
+    {
+        'post_author': 'Khair',
+        'post_title': 'Is Machine Learning the future ?',
+        'post_time': '18/5/2022'
+    },
+    {
+        'post_author': 'Ahammed',
+       'post_title': 'Data Analyst vs Data Scientist vs Data Engineer',
+        'post_time': '22/5/2022'
+    }
+]
+```
+* Add that dictionary in the render function
+
+```
+def home(request):
+    context = {
+        'posts':posts
+    }
+    return render(request, 'blog/home.html', context)
+```
+
+* Use Ginger to fetch the data in the template 
+
+```
+{% for post in posts %}
+    <h1>{{post.post_title}}</h1>
+    <p>By {{post.post_author}} on {{post.post_time}}</p>
+{% endfor %}
+```
+* Create a base html page 
+
+```
+<!DOCTYPE html>
+<html>
+   <head>
+   </head>
+
+    <body>
+   	(% block content %} {% endblock %}
+    </body
+</html>
+```
+* inherit the base html
+
+```
+{% extends blog\base.html %}
+{% block content %}
+
+	\\
+{% endblock content %}
+```
+** Adding static Folder 
+
+add a folder name static and then 'blog' in the static folder [same as app name]. Add css and other static filer there
+
+```
+{% load static %}
+<link rel = "stylesheet", type = "text/css" href = " {% static 'blog/main.css' %}">
+```
+
+* Make the links dynamic using url
+```href = '{% url 'blog-home[name]' %}'```
+
+## Lecture 4: Admin Panel
+
+```
+python manage.py createsuperuser [this will raise error as we haven't migrate the database yet] 
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+python manage.py createsuperuser
+```
+
+type username, email and password and log in to the admin panel 
