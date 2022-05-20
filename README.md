@@ -155,7 +155,7 @@ add a folder name static and then 'blog' in the static folder [same as app name]
 * Make the links dynamic using url
 ```href = '{% url 'blog-home[name]' %}'```
 
-## Lecture 4: Admin Panel
+# Lecture 4: Admin Panel
 
 ```
 python manage.py createsuperuser [this will raise error as we haven't migrate the database yet] 
@@ -169,7 +169,7 @@ python manage.py createsuperuser
 
 type username, email and password and log in to the admin panel 
 
-## Lecture 5: Database and Migrations
+# Lecture 5: Database and Migrations
 
 Django already has a built-in authentication system and a user model files
 * create the very first database [Post table]
