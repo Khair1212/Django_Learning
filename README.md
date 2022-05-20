@@ -168,3 +168,26 @@ python manage.py createsuperuser
 ```
 
 type username, email and password and log in to the admin panel 
+
+## Lecture 5: Database and Migrations
+
+Django already has a built-in authentication system and a user model files
+* create the very first database [Post table]
+
+models.py
+```
+from django.utils import timezone
+from django.contrib.auth.models import User
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+* Make migrations of the new Post model 
+
+```
+python manage.py makemigrations
+```
+
+*
