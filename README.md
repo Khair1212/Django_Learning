@@ -184,6 +184,13 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 ```
+* In order to have some descriptive Post model let's add a __str__ function
+
+```
+def __str__(self):
+	return self.title 
+```
+
 * Make migrations of the new Post model 
 
 ```
@@ -223,5 +230,27 @@ User.objects.get(id=1) <!--Get user of specific id-->
 Post.objects.all()
 post_1 = Post(title= "Blog_1", content = "First Blog Post", author = user) <!-- user ~ variable that we created earlier-->
 post_1.save() <!--save the post to migrate in the Model-->
+
+ 
+Post.objects.all()
+post = Post.objects.first()
+post.date_posted
+post.content
+post.author 
+
+
+user.post_set.all()
+user.post_set.create(title = "Blog 2", content = "Second Blog Content!")  <!-- create post without specifying author-->
 ```
 
+* Make changes to views file to get the data from the Post model 
+
+```
+**from .models import Post**
+
+def home(request):
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'blog/home.html', context)
+```
