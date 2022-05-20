@@ -193,6 +193,35 @@ python manage.py makemigrations
 * Create the sql file that is gonna generate 
 
 ```
-python manage.py sqlmigrate blog 001  
-<!--001-migration number-->
+python manage.py sqlmigrate blog 0001   <!--0001-migration number-->
 ```
+
+* Migrate the model
+
+```
+python manage.py migrate
+```
+
+* Let's work with the model interactively
+
+```
+python maange.py shell
+
+<!--Interactive Code-->
+
+from blog.models import Post  <!--import Post model-->
+from django.contrib.auth.models import User <!--import User model-->
+User.objects.all() <!--Get all posts -->
+User.objects.first() 
+User.objects.filter(username = 'khair1212') 
+User.objects.filter(username = 'khair1212').first()
+user = User.objects.filter(username = 'khair1212').first()
+user.id
+user.pk
+User.objects.get(id=1) <!--Get user of specific id-->
+
+Post.objects.all()
+post_1 = Post(title= "Blog_1", content = "First Blog Post", author = user) <!-- user ~ variable that we created earlier-->
+post_1.save() <!--save the post to migrate in the Model-->
+```
+
