@@ -246,11 +246,25 @@ user.post_set.create(title = "Blog 2", content = "Second Blog Content!")  <!-- c
 * Make changes to views file to get the data from the Post model 
 
 ```
-**from .models import Post**
+from .models import Post
 
 def home(request):
     context = {
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
+```
+
+* Format the date 
+home.html 
+```
+ <small class="text-muted">{{ post.date_posted | date:"F d, Y"}}</small>
+```
+
+* Register the model to the admin panel 
+admin.py 
+```
+from .model import Post
+
+admin.site.register(Post)
 ```
