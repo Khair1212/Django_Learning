@@ -190,4 +190,9 @@ class Post(models.Model):
 python manage.py makemigrations
 ```
 
-*
+* Create the sql file that is gonna generate 
+
+```
+python manage.py sqlmigrate blog 001  
+<!--001-migration number-->
+```
