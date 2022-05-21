@@ -423,7 +423,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 >
 	{% extends "blog/base.html" %}
-	{% load crispy_forms_tags %}
+	**{% load crispy_forms_tags %}**
 	{% block content %}
 		<div>
 			<form method = "POST">
@@ -431,7 +431,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 				<fieldset class= "form-group">
 					<legend class = "border-bottom mb-4">Join Today</legend>
-					{{form|crispy}} 
+					**{{form|crispy}}**
 				</fieldset> 
 				<div class = "form-group"> 
 					<button class = "btn btn-outline-info" type = "submit">Sign Up</button> 
