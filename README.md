@@ -421,7 +421,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 * Now load the crispy-forms in the register.html and change them accordingly
 
-<pre><code>
+>
 	{% extends "blog/base.html" %}
 	{% load crispy_forms_tags %}
 	{% block content %}
@@ -444,4 +444,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 			</div>
 		</div>
 	{% endblock content%}
-</pre></code>
+
