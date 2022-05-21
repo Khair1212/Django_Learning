@@ -157,15 +157,14 @@ add a folder name static and then 'blog' in the static folder [same as app name]
 
 # Lecture 4: Admin Panel
 
-```
-python manage.py createsuperuser [this will raise error as we haven't migrate the database yet] 
 
-python manage.py makemigrations
+`python manage.py createsuperuser` [this will raise error as we haven't migrate the database yet] 
 
-python manage.py migrate
+`python manage.py makemigrations`
 
-python manage.py createsuperuser
-```
+`python manage.py migrate`
+
+`python manage.py createsuperuser`
 
 type username, email and password and log in to the admin panel 
 
@@ -193,55 +192,52 @@ def __str__(self):
 
 * Make migrations of the new Post model 
 
-```
-python manage.py makemigrations
-```
+
+`python manage.py makemigrations`
+
 
 * Create the sql file that is gonna generate 
 
-```
-python manage.py sqlmigrate blog 0001   <!--0001-migration number-->
-```
+
+`python manage.py sqlmigrate blog 0001`  <!--0001-migration number-->
+
 
 * Migrate the model
 
-```
-python manage.py migrate
-```
+`python manage.py migrate`
 
 * Let's work with the model interactively
 
-```
-python maange.py shell
+`python maange.py shell`
 
 <!--Interactive Code-->
 
-from blog.models import Post  <!--import Post model-->
-from django.contrib.auth.models import User <!--import User model-->
-User.objects.all() <!--Get all posts -->
-User.objects.first() 
-User.objects.filter(username = 'khair1212') 
-User.objects.filter(username = 'khair1212').first()
-user = User.objects.filter(username = 'khair1212').first()
-user.id
-user.pk
-User.objects.get(id=1) <!--Get user of specific id-->
+`from blog.models import Post`  <!--import Post model-->
+`from django.contrib.auth.models import User` <!--import User model-->
+`User.objects.all()` <!--Get all posts -->
+`User.objects.first()`
+`User.objects.filter(username = 'khair1212')`
+`User.objects.filter(username = 'khair1212').first()`
+`user = User.objects.filter(username = 'khair1212').first()`
+`user.id`
+`user.pk`
+`User.objects.get(id=1)` <!--Get user of specific id-->
 
-Post.objects.all()
-post_1 = Post(title= "Blog_1", content = "First Blog Post", author = user) <!-- user ~ variable that we created earlier-->
-post_1.save() <!--save the post to migrate in the Model-->
+`Post.objects.all()`
+`post_1 = Post(title= "Blog_1", content = "First Blog Post", author = user)` <!-- user ~ variable that we created earlier-->
+`post_1.save()` <!--save the post to migrate in the Model-->
 
  
-Post.objects.all()
-post = Post.objects.first()
-post.date_posted
-post.content
-post.author 
+`Post.objects.all()`
+`post = Post.objects.first()`
+`post.date_posted`
+`post.content`
+`post.author` 
 
 
-user.post_set.all()
-user.post_set.create(title = "Blog 2", content = "Second Blog Content!")  <!-- create post without specifying author-->
-```
+`user.post_set.all()`
+`user.post_set.create(title = "Blog 2", content = "Second Blog Content!")`  <!-- create post without specifying author-->
+
 
 * Make changes to views file to get the data from the Post model 
 
@@ -256,13 +252,13 @@ def home(request):
 ```
 
 * Format the date 
-home.html 
+blog/templates/blog[home.html] 
 ```
  <small class="text-muted">{{ post.date_posted | date:"F d, Y"}}</small>
 ```
 
 * Register the model to the admin panel 
-admin.py 
+blog [admin.py] 
 ```
 from .model import Post
 
