@@ -268,3 +268,18 @@ from .model import Post
 
 admin.site.register(Post)
 ```
+
+
+# Lecture 6: User Registration 
+
+* Create a new user app 
+
+`python manage.py startapp register`
+
+* Settings in the installed app 
+
+INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+]
+
