@@ -421,18 +421,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 * Now load the crispy-forms in the register.html and change them accordingly
 
-```
-{% extends "blog/base.html" %}```
+`
+{% extends "blog/base.html" %}`
 **{% load crispy_forms_tags %}**
-```{% block content %}
+`{% block content %}
 	<div>
 		<form method = "POST">
 			{% csrf_token %} 
 
 			<fieldset class= "form-group">
-				<legend class = "border-bottom mb-4">Join Today</legend>```
+				<legend class = "border-bottom mb-4">Join Today</legend>`
 				**{{form|crispy}}**
-			```</fieldset> 
+			`</fieldset> 
 			<div class = "form-group"> 
 				<button class = "btn btn-outline-info" type = "submit">Sign Up</button> 
 			</div>
@@ -443,5 +443,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 			</small>
 		</div>
 	</div>
-{% endblock content%}```
-
+{% endblock content%}
+`
