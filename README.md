@@ -284,7 +284,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 ]
 ```
-* Add some views functions
+* Create the UserCreationForm and define the register function
+users[views.py]
 ```
 from django.shortcuts import render 
 from django.contrib.auth.forms import UserCreationForm
@@ -293,3 +294,154 @@ def register(request):
 	form = UserCreationForm()
 	return render(request, 'users/register.html', {'form': form})
 ```
+* create templates dir with users subdir and add register.html file 
+users/templates/users[register.html]
+```
+{% extends "blog/base.html" %}
+{% block content %}
+	<div>
+		<form method = "POST">
+			{% csrf_token %} 
+			
+			<fieldset class= "form-group">
+				<legend class = "border-bottom mb-4">Join Today</legend>
+				{{form}} 
+			</fieldset> 
+			<div class = "form-group"> 
+				<button class = "btn btn-outline-info" type = "submit">Sign Up</button> 
+			</div>
+		</form>
+		<div class = "border-top pt-3">
+			<small class = "text-muted">
+				Already Have an Account ? <a class = "ml-2" href = "#"> Sign In </a>
+			</small>
+		</div>
+	</div>
+{% endblock content%}
+```
+
+* Create an URL Pattern, we will do that now directly in the admin's urls.py file
+django_project[urls.py]
+```
+django_project [urls.py]
+from users import views as user_views
+urlpatterns = [
+	path('register/', user_views.register, name = 'register'),
+]
+```
+* Validate form, print success message and redirect to home
+users[views.py]
+```
+from django.shortcuts import render, redirect 
+from django.contrib import messages 
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+   if request.method == 'POST' : 
+ 
+	form = UserCreationForm(request.POST) 
+	if form.is_valid(): 
+		form.save() 
+		username = form.cleaned_data.get('username') 
+		messages.success(request, f'Account created for {username}!') 
+		return redirect ('blog-home') 
+
+   else:
+	form = UserCreationForm()
+
+   return render(request, 'users/register.html', {'form': form})
+```
+* Print message in the base.html. Add codes before the block content  
+blog[base.py] 
+
+```
+{% if messages %} 
+	{% for message in messages %} 
+		<div class = 'alert alert-{{message.tags}}'> 
+			{{ message }} 
+		</div 
+	{% endfor%} 
+{% endif %} 
+{% block content %} {% endblock %} 
+```
+* Let's add some more field in the form. We need more fields usually. First create a new form that inherits the UserCreationfForm. Let's create a forms.py file
+users[forms.py]
+```
+from django import forms  
+from django.contrib.auth.models import User
+from django.contrib.auth.models import UserCreationForm
+
+class UserRegisterForm(UserCreationForm):
+	email = forms.EmailField(required = True)  <!-- Extra added field -->
+	
+	class Meta:     <!--Meta gives us a nested namespace for configurations and keeps the configurations in one place-->
+		model = User     <!--set the model with whom the form will interact with-->
+		fields = ['username', 'email', 'password1', 'password2']   <!-- Specigying the fields of the form -->
+```
+
+* Let's just use this new form in the views [import the new form and use the instance of it ]
+
+```
+from .forms import UserRegisterForm 
+from django.shortcuts import render, redirect 
+from django.contrib import messages 
+ 
+def register(request):
+   if request.method == 'POST' : 
+ 
+	form = UserRegisterForm(request.POST) 
+	if form.is_valid(): 
+		form.save() 
+		username = form.cleaned_data.get('username') 
+		messages.success(request, f'Account created for {username}!') 
+		return redirect ('blog-home') 
+
+   else:
+	form = UserRegisterForm()
+
+   return render(request, 'users/register.html', {'form': form})
+```
+* Let's make the form llok bit preetier. We're going to use a third party application called Crispy-forms
+
+-- Install crispy-forms
+`pip install django-crispy-forms`
+
+-- Add to the installed apps 
+```
+INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'crispy-forms'
+]
+```
+--tell crispy form which css-framework it's going to use and add in the end of the file
+```
+CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+```
+
+* Now load the crispy-forms in the register.html and change them accordingly
+
+<pre><code>
+	{% extends "blog/base.html" %}
+	{% load crispy_forms_tags %}
+	{% block content %}
+		<div>
+			<form method = "POST">
+				{% csrf_token %} 
+
+				<fieldset class= "form-group">
+					<legend class = "border-bottom mb-4">Join Today</legend>
+					{{form|crispy}} 
+				</fieldset> 
+				<div class = "form-group"> 
+					<button class = "btn btn-outline-info" type = "submit">Sign Up</button> 
+				</div>
+			</form>
+			<div class = "border-top pt-3">
+				<small class = "text-muted">
+					Already Have an Account ? <a class = "ml-2" href = "#"> Sign In </a>
+				</small>
+			</div>
+		</div>
+	{% endblock content%}
+</pre></code>
