@@ -382,14 +382,14 @@ class UserRegisterForm(UserCreationForm):
 * Let's just use this new form in the views [import the new form and use the instance of it ]
 
 ```
-from .forms import UserRegisterForm 
+from .forms import UserRegisterForm  [**]
 from django.shortcuts import render, redirect 
 from django.contrib import messages 
  
 def register(request):
    if request.method == 'POST' : 
  
-	form = UserRegisterForm(request.POST) 
+	form = UserRegisterForm(request.POST)  [**]
 	if form.is_valid(): 
 		form.save() 
 		username = form.cleaned_data.get('username') 
@@ -397,7 +397,7 @@ def register(request):
 		return redirect ('blog-home') 
 
    else:
-	form = UserRegisterForm()
+	form = UserRegisterForm() [**]
 
    return render(request, 'users/register.html', {'form': form})
 ```
@@ -419,20 +419,20 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4' 
 ```
 
-* Now load the crispy-forms in the register.html and change them accordingly
+* Now load the crispy-forms in the register.html and change them accordingly [Affccted codes are indicated with [**]]
 
-`
-{% extends "blog/base.html" %}`
-**{% load crispy_forms_tags %}**
-`{% block content %}
+```
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}  [**]
+{% block content %}
 	<div>
 		<form method = "POST">
 			{% csrf_token %} 
 
 			<fieldset class= "form-group">
-				<legend class = "border-bottom mb-4">Join Today</legend>`
-				**{{form|crispy}}**
-			`</fieldset> 
+				<legend class = "border-bottom mb-4">Join Today</legend>
+				   {{form|crispy}} [**]
+			</fieldset> 
 			<div class = "form-group"> 
 				<button class = "btn btn-outline-info" type = "submit">Sign Up</button> 
 			</div>
@@ -444,4 +444,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 		</div>
 	</div>
 {% endblock content%}
-`
+```
