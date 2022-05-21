@@ -276,10 +276,20 @@ admin.site.register(Post)
 
 `python manage.py startapp register`
 
-* Settings in the installed app 
-
+* Setting up in the installed app 
+django_project[settings.py]
+```
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
 ]
+```
+* Add some views functions
+```
+from django.shortcuts import render 
+from django.contrib.auth.forms import UserCreationForm
 
+def register(request):
+	form = UserCreationForm()
+	return render(request, 'users/register.html', {'form': form})
+```
