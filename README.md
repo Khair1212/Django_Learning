@@ -1,6 +1,8 @@
+
 **playlist:** https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
 
-# Set up Virtual Environments
+# 1. Set up Virtual Environments
+
 
 * Install the virtual environment Package
   
@@ -20,7 +22,11 @@
     ```deactivate```
 
 
+
 # Lecture 1: Getting Started with Django
+=======
+# 2. Getting Started with Django
+
 
 * Install Django 
 ```pip install django```
@@ -33,6 +39,7 @@
 
 * Start App
 ```python manage.py startapp ~appname~```
+
 
 # Lecture 2: Applications and Routes
 
@@ -268,3 +275,5 @@ from .model import Post
 
 admin.site.register(Post)
 ```
+=======
+
