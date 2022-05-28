@@ -24,8 +24,6 @@
 
 
 # Lecture 1: Getting Started with Django
-=======
-# 2. Getting Started with Django
 
 
 * Install Django 
