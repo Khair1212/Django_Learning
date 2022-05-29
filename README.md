@@ -575,3 +575,105 @@ def profile(request):
 ```
 LOGIN_URL = 'login' 
 ```
+
+# Lecture 8: User Profile and Picture 
+
+* Add a new Profile model
+users: models.model
+```
+from django.contrib.auth.models import User
+
+
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete = models.CASCADE)
+	image = models.ImageField(default = 'default.jpg', upload_to = 'profile_pics')
+
+	def __str__(self):
+		return f'{self.user.username} Profile'
+```
+
+* Make migrations of the newly created model 
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+
+* Register the model
+users:Admin.py
+```
+from .models import Profile
+
+admin.site.register(Profile)
+```
+* Now the Profile model will create a folder called profile_pics in root directory. But we want to change the root directory as multiple Model can create a lot of folders in the root directory. Let's change the root directory to Media and also change the url.  
+django_project: settings.py
+
+```
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+```
+
+* Display all the things into the Profile page. Edit the profile page 
+users:profile.html
+```
+{% extends 'blog\base.html '%}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1> {{user.username}}</h1>
+     <div class="content-section">
+         <div class="media">
+             <img class="rounded-circle account-img" src = "{{ user.profile.img.url }}">
+             <div class="media-body">
+                 <h2 class="account-heading"> {{ user.username }} </h2>
+                 <p class="text-secondary">{{ user.email }}</p>
+             </div>
+         </div>
+         <!-- FROM HERE-->
+     </div>
+
+{% endblock content %}
+```
+
+* Serving files uploaded by a user during development 
+
+```
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+```
+
+Now Profile Pciture Should be Visible 
+
+* Now we automatically want to add a profile while a user sign up 
+
+* Create a signals.py file into the users app and write the codes
+
+```
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from .models import Profile
+
+
+@receiver(post_save, sender = User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+    instance.profile.save()
+```
+
+* Now we need to import our signals into the ready function of the users.app.py file 
+```
+class UsersConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'users'
+    
+    def ready(self):
+        import ysers.signals 
+```
