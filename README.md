@@ -781,3 +781,36 @@ class Profile(models.Model):
 <article class="media content-section">
             <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}">
 ```
+
+
+# Lecture 10: Create, Update and Delete Posts
+
+* Make the home as a list view 
+
+```
+from django.views.generic import ListView
+
+class PostListView(ListView):
+    model = Post
+```
+* Change urls.py 
+
+```
+from .views import PostListView
+urlpatterns = [
+    path('', PostListView.as_view(), name='blog-home'), 
+]
+```
+* This will looking for a template with a naming convention <app>/<model>_<viewtype>.html by default. So, change the template that it is looking for. 
+blog:views.py
+
+```
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/home.html' # <app>/<model>_<viewtype>.html 
+    context_object_name = 'posts'
+```
+* Order the post new to old 
+
+class PostListView(ListView):
+    ordering =  ['-date_posted']
