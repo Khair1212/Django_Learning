@@ -937,4 +937,117 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
 ```
+**--------------- Update ----------------**
+	
+* Post Update
+blogs:views.py
 
+```
+from .views import PostUpdateView
+
+class PostUpdateView(LoginRequiredMixin, UpdateView): 
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+```
+blogs:urls.py
+```
+from .views import PostUpdateView
+path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+```
+* Check the author of the post who is trying to update
+	
+```
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+```
+
+** ---------------- Delete ----------------**
+
+* Post Delete 
+blogs:views.py
+```
+from .views import PostDeleteView
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/blog/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+```
+blogs:urls.py
+```
+from .views import PostDeleteView
+
+path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+```
+
+
+* Add the conventional html file post_confirm_delete.html
+blog/template/blog/post_confirm_delete.html
+```
+{% extends 'blog\base.html '%}
+
+{% block content %}
+    <div class="content-section">
+        <form method = 'POST'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"> Delete Post</legend>
+                <h2> Are you sure you want to delete the post "{{ object.title }}"</h2>
+            </fieldset>
+            <div class = 'form-group'>
+                <button class="btn btn-outline-danger" type = 'submit'>Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
+```
+*Let's now update the interface to create, update, edit and delete 
+blog/templates/blog: base.html 
+
+```
+<!-- Navigation -->
+
+<div class="navbar-nav">
+     {% if user.is_authenticated %}
+           <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+```                   
+blog/templates/blog: post-detail.html 
+```
+<div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ object.author }}</a>
+          <small class="text-muted">{{ object.date_posted |date:"F d, Y"}}</small>
+        </div>
+          {% if object.author == user %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          {%  endif %}
+        <h2 class="article-title">{{ object.title }}</h2>
+          <p class="article-content"> {{object.content}}</p>
+
+</div>
+```	
