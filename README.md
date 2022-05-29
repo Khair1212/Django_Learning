@@ -852,3 +852,86 @@ blog/templates/blog: post_detail.html
     </article>
 {% endblock content %}
 ```
+* Active the Home Blog links
+blog/templates/blog: home.html
+```
+<h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+```
+
+------ Create -------
+	
+* Add a create view to create a new blog 
+blogs:views.py
+	
+```
+from .views import PostCreateView
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content']
+```
+
+blogs:urls.py
+
+```
+from .views import PostCreateView
+path('post/new/', PostCreateView.as_view(), name='post-create'),
+```
+blogs:post_form.html
+	
+```
+{% extends 'blog\base.html '%}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method = 'POST'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"> Blog Post</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class = 'form-group'>
+                <button class="btn btn-outline-info" type = 'submit'>Post</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
+```
+* Now only a authenticated user can post a blog. So, we need to haave the user id. Let's validate the form and get the user id
+```
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+```
+* Redirect URL error resolve once we create a post 
+blog: models.py
+```
+from django.urls import reverse
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
+```
+* Restrict unauthorized people from addidng post. For the class-based view we add mixins 
+blog: views.py
+```
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content']
+```
+
