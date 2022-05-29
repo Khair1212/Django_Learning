@@ -1,2 +1,5 @@
-.idea
-db.sqlite3
+.idea/
+db.sqlite3/
+blog/__pycache__/
+django_project/__pycache__/
+users/__pycache__/
