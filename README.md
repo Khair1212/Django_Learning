@@ -811,6 +811,44 @@ class PostListView(ListView):
     context_object_name = 'posts'
 ```
 * Order the post new to old 
-
+blog: views.py
+```
 class PostListView(ListView):
     ordering =  ['-date_posted']
+```
+* Create Individual post Detail View 
+blog: views.py
+```
+from django.views.generic import DetailView
+
+class PostDetailView(DetailView):
+    model = Post
+```
+* Make the url path (<pk> for having unique path for each individual element and specify the datatyp if we know it)
+blogs: views.html
+```
+from .views import  PostDetailView
+
+urlpatterns = [
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+]
+```
+* Create the conventional <app>/<model>_<viewtype>.html> file, post_detail.html in this case and change the instance name to be object as per the convention
+blog/templates/blog: post_detail.html
+```
+{% extends 'blog\base.html' %}
+{% block content %}
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{object.author.profile.image.url}}">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ object.author }}</a>
+          <small class="text-muted">{{ object.date_posted |date:"F d, Y"}}</small>
+        </div>
+        <h2 class="article-title">{{ object.title }}</h2>
+          <p class="article-content"> {{object.content}}</p>
+
+      </div>
+    </article>
+{% endblock content %}
+```
