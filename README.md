@@ -858,7 +858,7 @@ blog/templates/blog: home.html
 <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
 ```
 
------- Create -------
+**-------------- Create -------------**
 	
 * Add a create view to create a new blog 
 blogs:views.py
@@ -910,6 +910,7 @@ class PostCreateView(CreateView):
 ```
 * Redirect URL error resolve once we create a post 
 blog: models.py
+
 ```
 from django.urls import reverse
 
@@ -925,8 +926,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
 ```
+	
 * Restrict unauthorized people from addidng post. For the class-based view we add mixins 
 blog: views.py
+	
 ```
 from django.contrib.auth.mixins import LoginRequiredMixin
 
