@@ -1,6 +1,17 @@
 
 **playlist:** https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
 
+# Features
+
+![ss1](https://user-images.githubusercontent.com/41924102/171159117-1ae38325-f010-4095-9b0c-27342a7cfd57.jpg)
+![ss_6_pagination](https://user-images.githubusercontent.com/41924102/171159205-97ecc50d-0fee-468e-b4bd-1ec9ca985da6.jpg)
+![ss2_login](https://user-images.githubusercontent.com/41924102/171159149-32f9ca9c-3a15-43a3-8b32-a5dad131dbe9.jpg)
+![ss_3_register](https://user-images.githubusercontent.com/41924102/171159174-e71bc553-6299-4e40-b1d4-fff18647e42f.jpg)
+![ss_4_addPost](https://user-images.githubusercontent.com/41924102/171159188-bd329d13-1d42-4d60-a323-523e35a16e90.jpg)
+![ss_5_profile](https://user-images.githubusercontent.com/41924102/171159193-cd99fa7b-a32a-4aee-922e-02686242d9a9.jpg)
+![ss_7_reset](https://user-images.githubusercontent.com/41924102/171159157-2e16b96e-a826-400f-b0db-6922d4fb054b.jpg)
+
+# Walkthrough
 # 1. Set up Virtual Environments
 
 
