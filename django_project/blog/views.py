@@ -18,6 +18,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering =  ['-date_posted']
+    
 
 
 class PostDetailView(DetailView):
